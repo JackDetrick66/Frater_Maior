@@ -1,7 +1,11 @@
 import requests
 import schedule
 import time
+from datetime import datetime
 
+
+now = datetime.now()
+print("Date and Time of initiation: ", now)
 print("We're operational...")
 def job():
     print("Monitoring...")
