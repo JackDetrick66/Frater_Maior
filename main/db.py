@@ -37,7 +37,7 @@ def init_db():
     #close the connection, obviously
     conn.close()
 
-def add_site(url, check_interval=5):
+def add_site(url, check_interval=20):
     conn = get_connection()
     cur = conn.cursor()
     try:
@@ -71,12 +71,14 @@ def toggle_monitor_on(url):
     conn = get_connection()
     cur = conn.cursor()
     cur.execute("UPDATE sites SET is_active = ? WHERE url = ?", (1, url))
+    conn.commit()
     conn.close()
 
 def toggle_monitor_off(url):
     conn = get_connection()
     cur = conn.cursor()
     cur.execute("UPDATE sites SET is_active = ? WHERE url = ?", (0, url))
+    conn.commit()
     conn.close()
 
 def grab_monitor():
@@ -88,17 +90,17 @@ def grab_monitor():
     conn.close()
     return active
 
-def update_log(id, returnVal, timestamp):
+def update_log(id, response, timestamp):
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute("INSERT INTO logs (site_id, status, timestamp) values (?,?,?)", (id, returnVal, timestamp))
+    cur.execute("INSERT INTO logs (site_id, status, timestamp) values (?,?,?)", (id, str(response), timestamp))
     conn.commit()
     conn.close()
 
 def view_logs(siteID):
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute("SELECT status, timestamp FROM logs WHERE site_id = ?", (siteID))
+    cur.execute("SELECT status, timestamp FROM logs WHERE site_id = ?", (siteID,))
     returnVal = cur.fetchall()
     cur.close()
     conn.close()

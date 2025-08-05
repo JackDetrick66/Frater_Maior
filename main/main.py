@@ -1,7 +1,6 @@
 from db import init_db, add_site, list_sites, remove_site, toggle_monitor_on, toggle_monitor_off, view_logs
 from pyfiglet import Figlet
 import threading
-from datetime import datetime
 from db import init_db
 from watcher import start_watching
 
@@ -21,12 +20,11 @@ def run():
     f = Figlet(font='colossal')
     print(f.renderText("FRATER MAIOR\n"))
     print_sites()
-    # daemon means that it won't prevent the program from closing when the main thread is closed
-    spy = threading.Thread(target=start_watching, daemon=True)
+    
     spy_watching = False
     
     while True:
-        print("\n1. Add Site\n2. Remove Site\n3. Toggle Monitor On\n4 Toggle Monitor Off\n5. List Sites\n6. Star Monitoring\n7. Exit Monitor\n8. View Logs")
+        print("\n1. Add Site\n2. Remove Site\n3. Toggle Monitor On\n4 Toggle Monitor Off\n5. List Sites\n6. Start Monitoring\n7. Exit Monitor\n8. View Logs")
         choice = input("Make a choice: ")
         
         if choice == "1":
@@ -49,6 +47,8 @@ def run():
             if spy_watching:
                 print("Monitoring is already in progress.")
             else:
+                # daemon means that it won't prevent the program from closing when the main thread is closed
+                spy = threading.Thread(target=start_watching, daemon=True)
                 spy.start() #<- THIS RUNS IT AS A SEPARATE THREAD
                 #spy.run() <- THIS RUNS IT IN THE MAIN THREAD
                 print("Background monitoring started.")

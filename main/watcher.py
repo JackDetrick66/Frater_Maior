@@ -20,4 +20,4 @@ def start_watching():
                 finally:
                     update_log(i[0], status, datetime.now())
                     last_check[i[0]] = datetime.now()
-        time.sleep(1)
+        time.sleep(30)
