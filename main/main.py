@@ -24,7 +24,7 @@ def run():
     spy_watching = False
     
     while True:
-        print("\n1. Add Site\n2. Remove Site\n3. Toggle Monitor On\n4 Toggle Monitor Off\n5. List Sites\n6. Start Monitoring\n7. Exit Monitor\n8. View Logs")
+        print("\n1. Add Site\n2. Remove Site\n3. Toggle Monitor On\n4. Toggle Monitor Off\n5. List Sites\n6. Start Monitoring\n7. Exit Monitor\n8. View Logs")
         choice = input("Make a choice: ")
         
         if choice == "1":
